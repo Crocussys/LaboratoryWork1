@@ -1,11 +1,28 @@
 #ifndef DATABASE_H
 #define DATABASE_H
+#include <fstream>
+#include "product.h"
+
+using namespace std;
 
 
 class DataBase
 {
+private:
+    fstream file;
+    char* FileName;
+
+    int size;
+    Product* main;
 public:
-    DataBase();
+    DataBase(char* fname);
+    ~DataBase();
+
+    int FileIsOpen();
+    void Load();
+    void Save();
+    void Add(Product pr);
+    void Search();
 };
 
 #endif // DATABASE_H
