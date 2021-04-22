@@ -14,16 +14,16 @@ void menu::start(DataBase &db){
         cout << main << endl;
         cin >> input;
         if (input == "1"){
-            db.Search();
+            db.Search(0);
         }
         else if (input == "2"){
-
+            db.Search(1);
         }
         else if (input == "3"){
-
+            db.Search(2);
         }
         else if (input == "4"){
-
+            db.Search(3);
         }
         else if (input == "5"){
             add(db);

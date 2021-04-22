@@ -22,7 +22,9 @@ public:
     void Load();
     void Save();
     void Add(Product pr);
-    void Search();
+    void Search(int flag);
+    void Change(int ind);
+    void Delete(int ind);
 };
 
 #endif // DATABASE_H
