@@ -8,17 +8,19 @@ DataBase::DataBase(char* fname)
 {
     FileName = fname;
     file.open(FileName, ios::binary|ios::in);
-    file >> size;
+    size = -1;
+    main = nullptr;
 }
 DataBase::~DataBase(){
     file.close();
     delete [] main;
 }
-int DataBase::FileIsOpen(){
-    if(file) return 1;
-    else return 0;
+bool DataBase::FileIsOpen(){
+    if(file) return true;
+    else return false;
 }
 void DataBase::Load(){
+    file >> size;
     main = new Product[size];
     for (int i = 0; i < size; i ++){
         file >> main[i];

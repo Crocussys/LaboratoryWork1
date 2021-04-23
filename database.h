@@ -18,7 +18,7 @@ public:
     DataBase(char* fname);
     ~DataBase();
 
-    int FileIsOpen();
+    bool FileIsOpen();
     void Load();
     void Save();
     void PrintP(Product pr);
