@@ -21,6 +21,7 @@ public:
     int FileIsOpen();
     void Load();
     void Save();
+    void PrintP(Product pr);
     void Add(Product pr);
     void Search(int flag);
     void Change(int ind);

@@ -1,4 +1,3 @@
-#include <QCoreApplication>
 #include <iostream>
 #include "database.h"
 #include "menu.h"

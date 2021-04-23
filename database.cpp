@@ -86,6 +86,7 @@ void DataBase::Search(int flag){
     if (flag){
         cout << "Search> ";
         cin >> inp;
+        cout << endl;
     }
     for (int i = 1; i <= size; i++){
         a = main[i - 1];
@@ -95,10 +96,13 @@ void DataBase::Search(int flag){
         if (flag == 0 || (flag == 1 && !t.find(inp)) || (flag == 2 && !m.find(inp)) || (flag == 3 && !s.find(inp))){
             ans[count] = i - 1;
             count++;
-            cout << count << ". " << t << " " << m << " " << s << " " << a.getPrice() << "$" << endl;
+            cout << count << "." << t << " " << m << " " << s << " " << a.getPrice() << "$" << endl;
         }
     }
+    if (!count) cout << "Nothing found" << endl;
+    cout << "0.Back" << endl;
     while (true) {
+        cout << "> ";
         cin >> inpi;
         if (inpi == 0){
             break;
@@ -107,7 +111,6 @@ void DataBase::Search(int flag){
             break;
         }else{
             cout << "Specify a number from the menu or 0 for exit" << endl;
-            continue;
         }
     }
     delete [] ans;
@@ -115,10 +118,10 @@ void DataBase::Search(int flag){
 }
 void DataBase::Change(int ind){
     if (ind < 0 || ind > size - 1){
-        cout << "Error index" << endl;
+        cout << "Error index!" << endl;
         return;
     }
-    const string changemenu = "0 Accept\n1 Delete\nChange:\n2 Type\n3 Manufacturer\n4 Serie\n5 Model\n6 Colour\n7 Price\n8 Quantity\n9 Space in the warehouse\n10 Size\n11 Mark 'NEW'\n12 Mark 'DISCOUNT'";
+    const string changemenu = "0.Save\n1.Delete\nChange:\n2.Type\n3.Manufacturer\n4.Serie\n5.Model\n6.Colour\n7.Price\n8.Quantity\n9.Space in the warehouse\n10.Size\n11.Mark 'NEW'\n12.Mark 'DISCOUNT'";
     const string miss = "Specify a number from the menu!";
 
     Product a = main[ind];
@@ -127,22 +130,8 @@ void DataBase::Change(int ind){
     float inpf;
 
     while (true) {
-        cout << a.getType() << " " << a.getManufacturer()<< " " << a.getSerie() << endl <<
-                a.getModel() << endl <<
-                "Color " << a.getColor() << endl <<
-                "Price " << a.getPrice() << "$" << endl <<
-                a.getQuantity() << "items left in stock" << endl <<
-                "Place in the warehouse:" << endl <<
-                "Row " << a.getRow() << endl <<
-                "Place " << a.getPlace() << endl <<
-                "Size :" << endl <<
-                "Width " << a.getWidth() << endl <<
-                "Height " << a.getHeight() << endl <<
-                "Depth " << a.getDepth() << endl;
-        if (a.getNEW()) cout << "NEW" << endl;
-        if (a.getSALE()) cout << "DISCONT" << endl <<
-                                 "Old price" << a.getOldPrice() << endl;
-        cout << changemenu << endl;
+        PrintP(a);
+        cout << changemenu << endl << "> ";
         cin >> input;
         if (input == "0"){
             main[ind] = a;
@@ -152,52 +141,53 @@ void DataBase::Change(int ind){
         }
         else if (input == "1"){
             Delete(ind);
+            cout << "Deleted" << endl;
             break;
         }
         else if (input == "2"){
-            cout << "test> " << endl;
+            cout << "Type> ";
             cin >> input;
             a.setType(input);
         }
         else if (input == "3"){
-            cout << "test> " << endl;
+            cout << "Manufacturer> ";
             cin >> input;
             a.setManufacturer(input);
         }
         else if (input == "4"){
-            cout << "test> " << endl;
+            cout << "Serie> ";
             cin >> input;
             a.setSerie(input);
         }
         else if (input == "5"){
-            cout << "test> " << endl;
+            cout << "Model> ";
             cin >> input;
             a.setModel(input);
         }
         else if (input == "6"){
-            cout << "test> " << endl;
+            cout << "Color> ";
             cin >> input;
             a.setColor(input);
         }
         else if (input == "7"){
-            cout << "test> " << endl;
+            cout << "Price> ";
             cin >> inpf;
             a.setPrice(inpf);
         }
         else if (input == "8"){
-            cout << "test> " << endl;
+            cout << "Quantity> ";
             cin >> inpi;
             a.setQuantity(inpi);
         }
         else if (input == "9"){
-            cout << "test> " << endl;
+            cout << "Format: [row place]" << endl << "Space> ";
             cin >> inpi;
             a.setRow(inpi);
             cin >> inpi;
             a.setPlace(inpi);
         }
         else if (input == "10"){
-            cout << "test> " << endl;
+            cout << "Format: [width height depth]" << endl << "Size> ";
             cin >> inpf;
             a.setWidth(inpf);
             cin >> inpf;
@@ -207,7 +197,7 @@ void DataBase::Change(int ind){
         }
         else if (input == "11"){
             while (true) {
-                cout << "1. Mark 'NEW'" << endl << "2. Unmark 'NEW'" << endl;
+                cout << "1.Mark 'NEW' 2.Unmark 'NEW'" << endl << "> ";
                 cin >> input;
                 if (input == "1") {
                     a.setNEW(true);
@@ -216,19 +206,18 @@ void DataBase::Change(int ind){
                     a.setNEW(false);
                     break;
                 }else{
-                    cout << miss << endl;
-                    continue;
+                    cout << miss;
                 }
             }
         }
         else if (input == "12"){
             while (true) {
-                cout << "1. Mark 'DISCONT'" << endl << "2. Unmark 'DISCONT'" << endl;
+                cout << "1.Mark 'DISCONT' 2.Unmark 'DISCONT'" << endl << "> ";
                 cin >> input;
                 if (input == "1") {
-                    cout << "Enter a new price" << endl;
+                    cout << "Enter a new price." << endl << "> ";
                     cin >> inpf;
-                    a.setNEW(true);
+                    a.setSALE(true);
                     a.setOldPrice(a.getPrice());
                     a.setPrice(inpf);
                     break;
@@ -238,14 +227,48 @@ void DataBase::Change(int ind){
                     a.setOldPrice(-1);
                     break;
                 }else{
-                    cout << miss << endl;
-                    continue;
+                    cout << miss;
                 }
             }
         }
         else {
-            cout << miss << endl;
-            continue;
+            cout << miss;
         }
+        cout << endl;
     }
+}
+void DataBase::PrintP(Product pr){
+    string c = pr.getColor();
+    int r = pr.getRow();
+    int p = pr.getPlace();
+    float w = pr.getWidth();
+    float h = pr.getHeight();
+    float d = pr.getDepth();
+
+    cout << "----------------------------------------------------------------------" << endl <<
+            pr.getType() << " " << pr.getSerie() << " " << pr.getModel();
+    if (!c.empty()) cout << " Color: " << c;
+    cout << endl << pr.getManufacturer() << " Price: " << pr.getPrice() << "$" << endl << endl <<
+            pr.getQuantity() << " items left in stock." << endl <<
+            "Place in the warehouse" << endl <<
+            "Row:";
+    if (r >= 0) cout << r;
+    else cout << "-";
+    cout << " Place:";
+    if (p >= 0) cout << p;
+    else cout << "-";
+    cout << endl << "Size" << endl <<
+            "Width:";
+    if (w >= 0) cout << w;
+    else cout << "-";
+    cout << " Height:";
+    if(h >= 0) cout << h;
+    else cout << "-";
+    cout << " Depth:";
+    if (d >= 0) cout << d;
+    else cout << "-";
+    cout << endl;
+    if (pr.getNEW()) cout << "NEW" << endl;
+    if (pr.getSALE()) cout << "DISCONT Old price: " << pr.getOldPrice() << "$" << endl;
+    cout << "----------------------------------------------------------------------" << endl;
 }

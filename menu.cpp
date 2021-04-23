@@ -11,8 +11,9 @@ menu::menu()
 }
 void menu::start(DataBase &db){
     while (true){
-        cout << main << endl;
+        cout << main << endl << "> ";
         cin >> input;
+        cout << endl;
         if (input == "1"){
             db.Search(0);
         }
@@ -34,53 +35,54 @@ void menu::start(DataBase &db){
         }
         else {
             cout << miss << endl;
-            continue;
         }
+        cout << endl;
     }
 }
 void menu::add(DataBase &db){
     Product in;
     float inpf;
     int inpi;
-    cout << "What do you want to add?" << endl;
+    cout << "What do you want to add?" << endl << "> ";
     cin >> input;
     in.setType(input);
-    cout << "Specify manufacturer." << endl;
+    cout << "Enter manufacturer." << endl << "> ";
     cin >> input;
     in.setManufacturer(input);
-    cout << "Specify product series(name)." << endl;
+    cout << "Enter product series(name)." << endl << "> ";
     cin >> input;
     in.setSerie(input);
-    cout << "What`s the price?" << endl;
+    cout << "What`s the price?" << endl << "> ";
     cin >> inpf;
     in.setPrice(inpf);
     while (true){
-        cout << addmenu << endl;
+        db.PrintP(in);
+        cout << addmenu << endl << "> ";
         cin >> input;
         if (input == "1"){
-            cout << "Indicate model or feature." << endl;
+            cout << "Enter model or feature." << endl << "> ";
             cin >> input;
             in.setModel(input);
         }
         else if (input == "2"){
-            cout << "Indicate color." << endl;
+            cout << "Enter color." << endl << "> ";
             cin >> input;
             in.setColor(input);
         }
         else if (input == "3"){
-            cout << "Specify the quantity of goods." << endl;
+            cout << "Enter the quantity of goods." << endl << "> ";
             cin >> inpi;
             in.setQuantity(inpi);
         }
         else if (input == "4"){
-            cout << "Specify a place in the warehouse. Format: [row place]" << endl;
+            cout << "Enter a place in the warehouse. Format: [row place]." << endl << "> ";
             cin >> inpi;
             in.setRow(inpi);
             cin >> inpi;
             in.setPlace(inpi);
         }
         else if (input == "5"){
-            cout << "Indicate the dimensions. Format: [width height depth]" << endl;
+            cout << "Enter the dimensions. Format: [width height depth]." << endl << "> ";
             cin >> inpf;
             in.setWidth(inpf);
             cin >> inpf;
@@ -90,7 +92,7 @@ void menu::add(DataBase &db){
         }
         else if (input == "6"){
             while (true) {
-                cout << "1.Check NEW\n2.Uncheck NEW" << endl;
+                cout << "1.Check NEW\n2.Uncheck NEW" << endl << "> ";
                 cin >> input;
                 if (input == "1"){
                     in.setNEW(true);
@@ -99,18 +101,18 @@ void menu::add(DataBase &db){
                     in.setNEW(false);
                     break;
                 }else{
-                    cout << miss << endl;
-                    continue;
+                    cout << miss;
                 }
+                cout << endl;
             }
         }
         else if (input == "7"){
             while (true) {
-                cout << "1.Check DISCOUNT\n2.Uncheck DISCOUNT" << endl;
+                cout << "1.Check DISCOUNT\n2.Uncheck DISCOUNT" << endl << "> ";
                 cin >> input;
                 if (input == "1"){
                     in.setSALE(true);
-                    cout << "Enter the old price." << endl;
+                    cout << "Enter the old price." << endl << "> ";
                     cin >> inpf;
                     in.setOldPrice(inpf);
                     break;
@@ -119,18 +121,19 @@ void menu::add(DataBase &db){
                     in.setOldPrice(-1);
                     break;
                 }else{
-                    cout << miss << endl;
-                    continue;
+                    cout << miss;
                 }
+                cout << endl;
             }
         }
-        else if (input == "8"){
+        else if (input == "0"){
             break;
         }
         else {
-            cout << miss << endl;
-            continue;
+            cout << miss;
         }
+        cout << endl;
     }
     db.Add(in);
+    cout << "Added" << endl;
 }
